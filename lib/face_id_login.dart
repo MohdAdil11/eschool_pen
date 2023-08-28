@@ -1,38 +1,51 @@
+import 'dart:io';
+import 'package:eschool_pen/biometric_id.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter/material.dart';
+ class FaceId extends StatefulWidget {
+   const FaceId({Key? key}) : super(key: key);
 
-import 'face_id.dart';
+   @override
+   State<FaceId> createState() => _FaceIdState();
+ }
 
+ class _FaceIdState extends State<FaceId> {
 
-class FaceLogin extends StatefulWidget {
-  const FaceLogin({Key? key}) : super(key: key);
+   File ? _selectedImage;
 
-  @override
-  State<FaceLogin> createState() => _FaceLoginState();
-}
-
-class _FaceLoginState extends State<FaceLogin> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Face ID Authentication'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-
-            bool authenticated = await LocalAuthService().authenticate();
-            if (authenticated) {
-              // Navigate to the next screen or perform authorized actions
-              print('Authentication successful');
-            } else {
-              // Handle authentication failure
-              print('Authentication failed');
-            }
-          },
-          child: Text('Authenticate with Face ID'),
-        ),
-      ),
-    );
+   @override
+  void initState() {
+     _pickimagefromcamera();
+    super.initState();
   }
-}
+
+   @override
+   Widget build(BuildContext context) {
+     return  Column(
+       mainAxisAlignment: MainAxisAlignment.end,
+       children: [
+         Container(
+           color: Colors.white,
+           height: double.infinity,
+           width: double.infinity,
+         )
+       ],
+     );
+
+   }
+   Future _pickimagefromcamera() async {
+     final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+     if(returnedImage == null) return;
+     setState(() {
+       _selectedImage = File(returnedImage.path);
+       Navigator.push(
+             context,
+           MaterialPageRoute(builder: (context) => const Biometric()),
+            );
+     });
+
+   }
+  }
+

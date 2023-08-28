@@ -1,5 +1,12 @@
+
+import 'dart:io';
+
+import 'package:eschool_pen/facd_recognition.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'face_id_login.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -65,7 +72,13 @@ class _LoginState extends State<Login> {
                     height: 55,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: ()  {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const FaceId()),
+                        // );
+                        _pickimagefromcamera();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff9163D7),
                         shape: RoundedRectangleBorder(
@@ -99,5 +112,15 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+  Future _pickimagefromcamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if(returnedImage == null) return;
+    setState(() {
+      var _selectedImage = File(returnedImage.path);
+      print('its working');
+    });
+
   }
 }

@@ -5,9 +5,11 @@ import 'package:eschool_pen/face_id_login.dart';
 import 'package:eschool_pen/fill_name.dart';
 import 'package:eschool_pen/login_new.dart';
 import 'package:eschool_pen/login_screen.dart';
+import 'package:eschool_pen/student_section.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  LoginNew(),
+      home:  Student(),
     );
   }
 }
